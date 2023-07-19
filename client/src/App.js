@@ -10,19 +10,21 @@ import ProblemSet from "./pages/ProblemSet";
 import Contest from "./pages/Contest";
 import Rating from "./pages/Rating";
 import Profile from "./pages/Dashboard";
+import Compiler from "./Components/compiler";
 function App() {
   return (
     <div>
       <ResponsiveAppBar />
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<Compiler />} />
+        {/* <Route path="/register" element={<Register />} />
         <Route path="*" element={<Error />} />
         <Route path="/home" element={<Home />} />
         <Route path="/contest" element={<Contest />} />
         <Route path="/ProblemSet" element={<ProblemSet />} />
         <Route path="/Rating" element={<Rating />} />
         <Route path="/dash" element={<Profile />} />
+        <Route path="/run" element={<Compiler />} /> */}
       </Routes>
     </div>
   );

@@ -3,7 +3,13 @@ const router = new express.Router();
 const userDB = require("../models/userSchema");
 const bcryptjs = require("bcryptjs");
 const authenticate = require("../middleware/authenticate");
-
+const generateFile = require("../generatefile");
+const executeCpp = require("../executeCpp");
+const executePy = require("../executePy");
+const cors = require("cors");
+const jobDB = require("../models/job");
+const generateOutput = require("../generateOutput");
+const fs = require("fs");
 // for user registration
 
 router.post("/register", async (req, res) => {
@@ -103,6 +109,67 @@ router.get("/logout", authenticate, async (req, res) => {
     res.status(201).json({ status: 201 });
   } catch (error) {
     res.status(401).json({ status: 401, error });
+  }
+});
+
+// compiler
+router.use(express.urlencoded({ extended: true }));
+router.use(express.json());
+router.use(cors());
+
+router.get("/status", async (req, res) => {
+  const jobId = req.query.id;
+  console.log(jobId);
+  if (jobId == undefined) {
+    return res
+      .status(400)
+      .json({ status: false, error: "missing id query param" });
+  }
+  try {
+    const job = await jobDB.findById(jobId);
+    if (job === undefined) {
+      return res.status(404).json({ success: false, error: "invalid job id" });
+    }
+    return res.status(200).json({ success: true, job });
+  } catch (err) {
+    res.status(400).json({ success: false, error: JSON.stringify(err) });
+  }
+});
+
+router.post("/run", async (req, res) => {
+  const { language, code, input } = req.body;
+
+  if (code === undefined) {
+    res.status(404).json({ success: false, error: "Please provide the code" });
+  }
+  let job;
+  try {
+    const filePath = await generateFile(language, code);
+
+    job = await new jobDB({ language, filePath, input }).save();
+    const jobId = job._id;
+    res.status(201).json({ success: true, jobId });
+
+    let output;
+    job["startedAt"] = new Date();
+    job["input"] = input;
+    if (language === "cpp") {
+      output = fs.readFileSync(await executeCpp(filePath, input));
+    } else if (language === "py") {
+      output = fs.readFileSync(await executePy(filePath, input));
+    }
+    job["completedAt"] = new Date();
+    job["status"] = "success";
+    job["output"] = output;
+    await job.save();
+    console.log(job);
+  } catch (err) {
+    job["status"] = "error";
+    job["completedAt"] = new Date();
+    job["output"] = JSON.stringify(err);
+    await job.save();
+    // res.status(404).json({ err });
+    console.log(job);
   }
 });
 module.exports = router;

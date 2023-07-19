@@ -20,6 +20,7 @@
     "jsonwebtoken": "^9.0.1",
     "mongodb": "^5.7.0",
     "mongoose": "^7.3.2",
+    "uuid": "^9.0.0",
     "validator": "^13.9.0"
   }
 }

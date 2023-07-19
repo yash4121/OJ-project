@@ -7,6 +7,9 @@ const Profile = () => {
   return (
     <div style={{ textAlign: "center" }}>
       <h1>
+        Name : {logindata.validUserone ? logindata.validUserone.name : ""}
+      </h1>
+      <h1>
         User E-mail:{" "}
         {logindata.validUserone ? logindata.validUserone.email : ""}
       </h1>
