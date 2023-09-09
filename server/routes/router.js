@@ -10,6 +10,8 @@ const cors = require("cors");
 const jobDB = require("../models/job");
 const generateOutput = require("../generateOutput");
 const fs = require("fs");
+const { findOne } = require("../models/problem");
+const problemDB = require("../models/problem");
 // for user registration
 
 router.post("/register", async (req, res) => {
@@ -171,5 +173,36 @@ router.post("/run", async (req, res) => {
     // res.status(404).json({ err });
     console.log(job);
   }
+
+  // problem
+  const AddProblem = async (req, res, next) => {
+    try {
+      const { probName, Statement, Constraints, diff } = req.body;
+      const existProb = await problemDB.findOne({ probName });
+      if (existProb) {
+        return res.json({ message: "Problem Name already exists" });
+      }
+      const prob = problemDB.create({ probName, Statement, Constraints, diff });
+      res
+        .status(201)
+        .json({ message: "Problem added successfully", success: true, prob });
+      next();
+    } catch (err) {
+      res.status(400).json({ success: false, error: JSON.stringify(err) });
+    }
+  };
+  const listofProblems = async (req, res) => {
+    try {
+      const list = await problemDB.find();
+      if (list) {
+        return res
+          .status(201)
+          .json({ message: "list of problems", success: true, list });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const singleProblem = async (req, res) => {};
 });
 module.exports = router;

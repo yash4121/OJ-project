@@ -1,23 +1,23 @@
-const stubs = () => {};
+// const stubs = () => {};
 
-stubs.cpp = `#include <iostream>
+// stubs.cpp = `#include <iostream>
 
-using namespace std;
+// using namespace std;
 
-int main()
-{
-    cout<<"Hello World";
+// int main()
+// {
+//     cout<<"Hello World";
 
-    return 0;
-}
-`;
+//     return 0;
+// }
+// `;
 
-stubs.c = `#include<stdio.h>
-int main() {
-    printf("Hello World!\\n");
-}`;
+// stubs.c = `#include<stdio.h>
+// int main() {
+//     printf("Hello World!\\n");
+// }`;
 
-stubs.py = `print("Hello World!")
-`;
+// stubs.py = `print("Hello World!")
+// `;
 
-module.exports = stubs;
+// module.exports = stubs;

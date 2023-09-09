@@ -1,33 +1,11 @@
-// import logo from './logo.svg';
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-import ResponsiveAppBar from "./Components/Head";
-import Login from "./Components/Login";
-import Register from "./Components/Register";
-import Home from "./pages/Home";
-import Error from "./Components/Error";
-import ProblemSet from "./pages/ProblemSet";
-import Contest from "./pages/Contest";
-import Rating from "./pages/Rating";
-import Profile from "./pages/Dashboard";
-import Compiler from "./Components/compiler";
+import "./App.css";
+import axios from "axios";
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+// import ResponsiveAppBar from "./Components/Head";
+
 function App() {
-  return (
-    <div>
-      <ResponsiveAppBar />
-      <Routes>
-        <Route path="/" element={<Compiler />} />
-        {/* <Route path="/register" element={<Register />} />
-        <Route path="*" element={<Error />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/contest" element={<Contest />} />
-        <Route path="/ProblemSet" element={<ProblemSet />} />
-        <Route path="/Rating" element={<Rating />} />
-        <Route path="/dash" element={<Profile />} />
-        <Route path="/run" element={<Compiler />} /> */}
-      </Routes>
-    </div>
-  );
+  
 }
 
 export default App;
