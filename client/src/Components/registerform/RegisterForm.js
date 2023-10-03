@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./Register.css";
+import "./RegisterForm.css";
 import { NavLink } from "react-router-dom";
-const Register = () => {
+const RegisterForm = () => {
   const [passShow, setPassShow] = useState(false);
   const [cpassShow, SetCPassShow] = useState(false);
   const [inputVal, setinputVal] = useState({
@@ -153,4 +153,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RegisterForm;

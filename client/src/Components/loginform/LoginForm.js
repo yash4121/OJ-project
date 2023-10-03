@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import "./Login.css";
+import "./LoginForm.css";
 // import { Input } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 
-const Login = () => {
+const LoginForm = () => {
   const [passShow, setPassShow] = useState(false);
   const [inputVal, setinputVal] = useState({
     email: "",
@@ -116,4 +116,4 @@ const Login = () => {
     </div>
   );
 };
-export default Login;
+export default LoginForm;

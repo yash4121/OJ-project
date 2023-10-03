@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useNavigate } from "react";
 import axios from "axios";
-import "./addProblem.css";
+import "./AddProblem.css";
 import { Navigate } from "react-router-dom";
 
 const AddProblem = ({ isAuthor }) => {
@@ -22,6 +22,16 @@ const AddProblem = ({ isAuthor }) => {
     const { id, value } = e.target;
     const newState = { ...problemData, [id]: value };
     setProblemData(newState);
+  };
+
+  const handleTagChange = (e) => {
+    const selectedTag = e.target.value;
+    setProblemData((prevProblemData) => ({
+      ...prevProblemData,
+      tags: prevProblemData.tags.includes(selectedTag)
+        ? prevProblemData.tags.filter((tag) => tag !== selectedTag)
+        : [...prevProblemData.tags, selectedTag],
+    }));
   };
 
   const handleSubmit = async (e) => {
